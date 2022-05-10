@@ -11,3 +11,5 @@ dist
 
 yarn-debug.log*
 yarn-error.log*
+
+dump.rdb
