@@ -4,6 +4,8 @@ import { MyContext } from "../types";
 
 // @query is for getting data, @mutation is for create, updating etc
 
+// const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms));
+
 @Resolver()
 export class PostResolver {
   /*
@@ -22,7 +24,9 @@ export class PostResolver {
 
   // this will return an array of post
   @Query(() => [Post])
-  posts(@Ctx() { em }: MyContext): Promise<Post[]> {
+  async posts(@Ctx() { em }: MyContext): Promise<Post[]> {
+    // for fun
+    // await sleep(3000);
     return em.find(Post, {});
   }
 

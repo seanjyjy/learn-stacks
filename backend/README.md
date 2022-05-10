@@ -21,7 +21,7 @@ req.session.userId = user.id;
 { userId: 1 } -> send that to redis
 
 sess:asdfasdfasdf -> { userId: 1 }
-
+dumb.
 express-session will set a cookie on my browser with `some signed stuff` (signed)
 
 when user makes a request, this `some signed stuff` will be send to server

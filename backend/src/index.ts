@@ -16,14 +16,18 @@ import mikroConfig from "./mikro-orm.config";
 import { HelloResolver } from "./resolvers/hello";
 import { PostResolver } from "./resolvers/post";
 import { UserResolver } from "./resolvers/user";
-import { __prod__ } from "./constants";
+import { COOKIE_NAME, __prod__ } from "./constants";
 
 config();
 
 const initServer = async (orm: MikroORM<PostgreSqlDriver>) => {
   const app = express();
   const corsOptions = {
-    origin: ["http://localhost:4000", "https://studio.apollographql.com"],
+    origin: [
+      "http://localhost:4000",
+      "http://localhost:3000",
+      "https://studio.apollographql.com",
+    ],
     credentials: true,
   };
   app.use(cors(corsOptions));
@@ -40,7 +44,7 @@ const initServer = async (orm: MikroORM<PostgreSqlDriver>) => {
   // ORDER matters, this session middleware will run before the apollo middleware
   app.use(
     session({
-      name: "qid",
+      name: COOKIE_NAME,
       store: new RedisStore({
         client: redisClient,
         disableTouch: true,
@@ -80,10 +84,7 @@ const initServer = async (orm: MikroORM<PostgreSqlDriver>) => {
   // create a graphQL endpoint on express
   apolloServer.applyMiddleware({
     app,
-    cors: {
-      origin: ["http://localhost:4000", "https://studio.apollographql.com"],
-      credentials: true,
-    },
+    cors: false,
     // path: "/graphql",
   });
 
